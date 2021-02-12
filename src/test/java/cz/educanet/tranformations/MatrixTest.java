@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class MatrixTest {
 
@@ -63,18 +64,45 @@ public class MatrixTest {
 
     @Test
     public void times() {
+        double[][] rawExpected = {
+                {1, 1, 1},
+                {1, 1, 1},
+                {0, 0, 0},
+        };
+        IMatrix expected = MatrixFactory.create(rawExpected);
+
+        assertNull(b.times(d));
+        assertEquals(expected, b.times(c));
     }
 
     @Test
     public void timesScalar() {
+        double[][] rawExpected = {
+                {5, 5, 5},
+                {5, 5, 5},
+                {0, 0, 0},
+        };
+        IMatrix expected = MatrixFactory.create(rawExpected);
+
+        assertEquals(expected, b.times(5));
     }
 
     @Test
     public void add() {
+        double[][] rawExpected = {
+                {2, 1, 1},
+                {1, 2, 1},
+                {0, 0, 1},
+        };
+        IMatrix expected = MatrixFactory.create(rawExpected);
+
+        assertNull(a.add(b));
+        assertEquals(expected, b.add(c));
     }
 
     @Test
     public void get() {
+        assertEquals(1, b.get(1, 1), 0);
     }
 
     @Test

@@ -27,22 +27,51 @@ public class Matrix implements IMatrix {
 
     @Override
     public IMatrix times(IMatrix matrix) {
-        throw new NotImplementedError(); // TODO:
+        if (matrix.getColumns() != this.getRows()) return null;
+
+        double[][] result = new double[matrix.getRows()][this.getColumns()];
+
+        for(int x = 0; x < matrix.getRows(); x++) {
+            for (int y = 0; y < this.getColumns(); y++) {
+                for (int i = 0; i < matrix.getColumns(); i++) {
+                    result[x][y] += matrix.get(x, i) * rawArray[i][y];
+                }
+            }
+        }
+
+        return MatrixFactory.create(result);
     }
 
     @Override
     public IMatrix times(Number scalar) {
-        throw new NotImplementedError(); // TODO:
+        int columns = this.getColumns();
+        int rows = this.getRows();
+        double[][] result = new double[rows][columns];
+
+        for (int x = 0; x < rows; x++)
+            for (int y = 0; y < columns; y++) result[x][y] = rawArray[x][y] * scalar.doubleValue();
+
+        return MatrixFactory.create(result);
     }
 
     @Override
     public IMatrix add(IMatrix matrix) {
-        throw new NotImplementedError(); // TODO:
+        int columns = this.getColumns();
+        int rows = this.getRows();
+
+        if (columns != matrix.getColumns() || rows != matrix.getRows()) return null; // Returns null if matrices aren't the same size
+
+        double[][] result = new double[rows][columns];
+
+        for (int x = 0; x < rows; x++)
+            for (int y = 0; y < columns; y++) result[x][y] = rawArray[x][y] + matrix.get(x, y);
+
+        return MatrixFactory.create(result);
     }
 
     @Override
     public double get(int n, int m) {
-        throw new NotImplementedError(); // TODO:
+        return rawArray[n][m];
     }
 
     //region Optional
@@ -75,4 +104,8 @@ public class Matrix implements IMatrix {
         return Arrays.hashCode(rawArray);
     }
     //endregion
+
+    public static void main(String[] args) {
+        System.out.println("hi");
+    }
 }
